@@ -1,0 +1,30 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Measure performance
+class "buildBundleSizeTarget" as plugin <<proposed>> {
+ +projectRoot: string
+ +result: TargetConfiguration | null
+}
+class "monosize measure" as size <<module>> {
+ +fixturePath: string
+}
+class "render" as render <<module>> {
+ +scenarios: Scenarios
+ +iterations: number
+}
+class "Scenario" as scenario <<interface>> {
+ +(): ReactElement
+ +decorator: ComponentType | undefined
+}
+plugin ..> size : builds target command
+render ..> scenario : executes selected scenario
+@enduml

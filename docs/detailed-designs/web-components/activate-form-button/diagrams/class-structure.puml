@@ -1,0 +1,35 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Activate form Button
+class "Button" as button <<module>> {
+ +appearance: ButtonAppearance
+ +shape: ButtonShape
+}
+class "BaseButton" as base <<class>> {
+ +type: ButtonType
+ +name: string | undefined
+ +value: string | undefined
+ +press(): void
+ +submitForm(): void
+}
+class "ElementInternals" as internals <<interface>> {
+ +form: HTMLFormElement | null
+ +setFormValue(value): void
+}
+class "HTMLFormElement" as form <<interface>> {
+ +requestSubmit(submitter): void
+ +reset(): void
+}
+base <|-- button
+base ..> internals : uses attached internals
+internals ..> form : references associated form
+@enduml

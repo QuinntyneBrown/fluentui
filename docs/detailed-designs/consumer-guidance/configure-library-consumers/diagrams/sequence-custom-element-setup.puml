@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Configure Web Component consumer
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Consumer application" as host
+participant "FluentProvider" as provider
+participant "button/define.ts" as registration
+participant "setTheme" as theme
+end box
+actor -> host : Follow Web Component quick start [L2-037]
+host -> registration : Import individual registration entry
+registration --> host : Custom element defined
+host -> theme : setTheme(token theme)
+theme --> host : Custom properties applied
+host --> actor : Themed element with accessible naming
+@enduml

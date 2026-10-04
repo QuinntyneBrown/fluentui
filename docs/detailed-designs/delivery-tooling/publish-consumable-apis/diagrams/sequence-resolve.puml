@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Resolve packaged consumer entry points
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "Package manifest" as manifest
+participant "generate-api executor" as api
+participant "verify-packaging executor" as verify
+participant "Isolated consumer fixture" as consumer
+end box
+actor -> consumer : Import installed package [L2-027]
+consumer -> manifest : Select export condition
+alt ESM import
+manifest --> consumer : lib/index.js and dist/index.d.ts
+else CommonJS require
+manifest --> consumer : lib-commonjs/index.cjs and dist/index.d.cts
+end
+consumer --> actor : Public symbols from shipped output
+@enduml

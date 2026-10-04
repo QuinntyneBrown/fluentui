@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Publish consumable APIs
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(manifest, "Package manifest", "JSON configuration", "Routes ESM, CommonJS, and declarations")
+Component(api, "generate-api executor", "Nx executor", "Produces public API documentation")
+Component(verify, "verify-packaging executor", "Nx executor", "Checks the dry-run package file list")
+Component(consumer, "Isolated consumer fixture", "Acceptance target", "Resolves installed tarball without aliases")
+}
+Rel(api, manifest, "uses public entry configuration")
+Rel(verify, manifest, "checks shipped file patterns")
+Rel(consumer, manifest, "resolves export map")
+@enduml

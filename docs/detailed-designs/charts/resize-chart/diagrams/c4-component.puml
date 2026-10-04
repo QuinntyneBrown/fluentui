@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Resize chart
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(container, "ResponsiveContainer", "React component", "Measures host and clones chart child")
+Component(observer, "ResizeObserver", "Browser API", "Reports content rectangle changes")
+Component(frame, "Window animation frame", "Browser API", "Defers rounded dimension update")
+Component(child, "ResponsiveChildProps", "Type interface", "Receives calculated dimensions")
+}
+Rel(container, observer, "owns observer lifecycle")
+Rel(container, frame, "schedules updates")
+Rel(container, child, "clones with dimensions")
+@enduml

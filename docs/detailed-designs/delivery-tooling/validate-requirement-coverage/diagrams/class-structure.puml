@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Validate requirement coverage
+class "Nx task runner" as nx <<module>> {
+ +target: string
+ +project: string
+}
+class "workspace-plugin" as plugin <<module>> {
+ +createNodesV2: function
+}
+class "isConformant" as conformance <<module>> {
+ +options: IsConformantOptions
+}
+class "Acceptance coverage record" as coverage <<proposed>> {
+ +requirementId: string
+ +testPath: string
+ +status: passed | failed | not-run
+}
+nx ..> plugin : loads inferred targets
+nx ..> conformance : runs configured test suite
+coverage ..> nx : records actual outcomes
+@enduml

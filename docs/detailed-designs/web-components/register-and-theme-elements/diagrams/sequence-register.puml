@@ -1,0 +1,35 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Register individual or declarative element
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "button/define.ts" as define
+participant "Button" as button
+participant "setTheme" as theme
+participant "button.definition-async" as assets
+end box
+actor -> define : Import button entry point [L2-018]
+alt Normal definition
+define -> button : Button.define(definition)
+else Declarative definition
+define -> assets : Read declarativeDefinition [L2-017]
+assets --> define : Definition referencing template assets
+define -> button : Button.define(declarativeDefinition)
+end
+button --> actor : fluent-button registered
+note over assets : Distribution ships template and stylesheet assets
+@enduml

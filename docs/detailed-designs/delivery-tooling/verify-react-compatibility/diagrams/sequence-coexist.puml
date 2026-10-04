@@ -1,0 +1,30 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Validate migration coexistence
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "rit.config.js" as matrix
+participant "react-integration-tester" as runner
+participant "tsconfig.r17/r18/r19" as types
+participant "react-components/package.json" as metadata
+end box
+actor -> runner : Request proposed coexistence fixture [L2-025]
+note over runner : Fixture is an acceptance target, not verified existing coverage
+runner -> metadata : Resolve distinct v8 and v9 packages
+metadata --> runner : Separate consumer APIs
+runner --> actor : Record render/callback results without adopting v8 conventions
+@enduml

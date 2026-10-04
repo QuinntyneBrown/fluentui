@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Open and dismiss Menu
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(menu, "useMenuBase_unstable", "Menu state hook", "Owns open state, trigger refs, and positioning")
+Component(position, "usePositioning", "Foundation hook", "Positions target and popup")
+Component(popover, "useMenuPopover_unstable", "Popup hook", "Handles Escape/Tab and focus restoration")
+Component(portal, "Portal", "Foundation component", "Mounts popup content in supported host")
+}
+Rel(menu, position, "sets position options")
+Rel(popover, menu, "requests open state changes")
+Rel(popover, portal, "uses portal rendering")
+@enduml

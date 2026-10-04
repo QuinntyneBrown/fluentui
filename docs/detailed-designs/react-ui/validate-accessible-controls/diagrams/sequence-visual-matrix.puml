@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Evaluate viewport and visual modes
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "ButtonAccessibility contract" as spec
+participant "ComponentTestFacade" as facade
+participant "validateBehavior" as checks
+participant "Button" as button
+end box
+actor -> button : Render proposed mode/width fixture [L2-012, L2-042]
+note over button : Target acceptance behavior; coverage is not yet verified
+actor -> button : Tab, activate, inspect overflow and visuals
+button --> actor : Observable focus, callback, and layout
+alt Recorded expected result exists
+actor -> spec : Record pass/fail against fixture expectation
+else Missing expected result or skipped run
+actor -> spec : Record uncovered mode
+end
+@enduml

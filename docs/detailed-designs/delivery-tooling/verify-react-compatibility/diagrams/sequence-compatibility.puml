@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Compare declared and exercised versions
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "rit.config.js" as matrix
+participant "react-integration-tester" as runner
+participant "tsconfig.r17/r18/r19" as types
+participant "react-components/package.json" as metadata
+end box
+actor -> metadata : Read React peer range [L2-024]
+metadata --> actor : Declared >=16.14.0 <20.0.0
+actor -> runner : Select integration configuration
+runner -> matrix : Read configured majors
+matrix --> runner : 17, 18, 19 type-check configuration
+runner -> types : Execute selected version checks
+types --> runner : Actual outcomes
+runner --> actor : Report configured/tested/unverified separately
+@enduml

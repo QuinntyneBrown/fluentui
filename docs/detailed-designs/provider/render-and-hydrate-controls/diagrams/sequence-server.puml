@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Produce markup without browser globals
+actor "Application user" as actor
+box "Backend - Consumer server renderer" #D1FADF
+participant "renderToStaticMarkup" as server
+participant "FluentProvider" as provider
+participant "useFluentProviderThemeStyleTag" as tag
+end box
+box "Frontend - Consumer browser (later hydration)" #E0F2FE
+participant "hydrateRoot" as hydrate
+end box
+actor -> server : Render provider and Button tree [L2-015]
+server -> provider : Render with no target document
+provider -> tag : Calculate theme rule and class
+note over tag : No DOM insertion without usable document
+tag --> provider : Rule and ID for server output
+provider --> server : JSX including server style data
+server --> actor : HTML markup
+@enduml

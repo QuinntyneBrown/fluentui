@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Record package changes
+Person(actor, "Maintainer", "Uses or reviews the feature")
+System(host, "Fluent UI delivery workflow", "Beachball change records associate published package changes with release intent")
+System_Ext(platform, "Local execution tools", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

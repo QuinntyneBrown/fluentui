@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Render and hydrate controls
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "Server rendering produces React markup before a browser document exists")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+System_Ext(server, "Consumer server renderer", "Produces initial React HTML")
+Rel(server, host, "Supplies initial HTML")
+@enduml

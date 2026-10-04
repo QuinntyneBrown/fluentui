@@ -1,0 +1,39 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Reuse server theme style during hydration
+actor "Application user" as actor
+box "Backend - Consumer server renderer" #D1FADF
+participant "renderToStaticMarkup" as server
+end box
+box "Frontend - Consumer browser application" #E0F2FE
+participant "FluentProvider" as provider
+participant "useFluentProviderThemeStyleTag" as tag
+participant "hydrateRoot" as hydrate
+end box
+actor -> hydrate : Attach equivalent client tree [L2-016]
+hydrate -> provider : Render with client targetDocument
+provider -> tag : Find matching server style element
+tag -> tag : Move style element into document head
+alt Matching style tag exists
+tag -> tag : Reuse existing tag
+else Tag absent
+tag -> tag : Create tag and insert rule
+end
+tag --> provider : Theme lifecycle active
+provider --> hydrate : Client tree
+hydrate --> actor : Hydrated control without fixture errors
+@enduml

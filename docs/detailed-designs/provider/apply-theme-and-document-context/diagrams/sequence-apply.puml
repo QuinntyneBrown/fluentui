@@ -1,0 +1,36 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Merge and apply provider settings
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "useFluentProvider_unstable" as provider
+participant "useFluentProviderThemeStyleTag" as tag
+participant "useFluentProviderContextValues_unstable" as context
+participant "usePortalMountNode" as portal
+end box
+actor -> provider : Render parent/local theme, dir, document [L2-007, L2-013, L2-014]
+provider -> provider : shallowMerge(parentTheme, theme)
+provider -> tag : Resolve CSS rule for effective theme
+alt targetDocument has head
+tag -> tag : Insert or reuse style tag
+else No usable document head
+tag -> tag : Return rule without DOM insertion
+end
+tag --> provider : styleTagId and rule
+provider -> context : Expose effective contexts
+context --> actor : Themed descendant subtree
+@enduml

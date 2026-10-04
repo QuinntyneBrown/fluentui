@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Validate accessible controls
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "Accessible control validation connects a component's documented semantics to keyboard and visual checks")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

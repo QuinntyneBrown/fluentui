@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Render and hydrate controls
+class "renderToStaticMarkup" as server <<module>> {
+ +element: ReactElement
+ +result: string
+}
+class "FluentProvider" as provider <<module>> {
+ +targetDocument: Document | undefined
+ +serverStyleProps: object
+}
+class "useFluentProviderThemeStyleTag" as tag <<module>> {
+ +styleTagId: string
+ +rule: string
+}
+class "hydrateRoot" as hydrate <<module>> {
+ +container: Element
+ +element: ReactNode
+}
+server ..> provider : renders provider
+provider ..> tag : supplies theme lifecycle
+hydrate ..> provider : attaches client behavior
+@enduml

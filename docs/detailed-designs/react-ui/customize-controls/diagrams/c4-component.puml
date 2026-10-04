@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Customize controls
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(entry, "Button / Input", "ForwardRefComponent", "Runs state, style, and render functions")
+Component(slots, "slot.always / slot.optional", "Slot utilities", "Normalize required and optional slot props")
+Component(styles, "useButtonStyles_unstable", "Style hook", "Merges token-based classes with consumer classes")
+Component(render, "assertSlots / renderButton_unstable", "Render boundary", "Checks slot typing and renders state")
+}
+Rel(entry, slots, "resolves slots")
+Rel(entry, styles, "applies styles")
+Rel(entry, render, "renders styled state")
+@enduml

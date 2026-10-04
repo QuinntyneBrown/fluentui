@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Apply theme and document context
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(provider, "useFluentProvider_unstable", "Provider state hook", "Merges inherited settings")
+Component(tag, "useFluentProviderThemeStyleTag", "Theme stylesheet hook", "Creates and reuses theme rules")
+Component(context, "useFluentProviderContextValues_unstable", "Context adapter", "Exposes Fluent and theme contexts")
+Component(portal, "usePortalMountNode", "Portal foundation hook", "Applies theme class and direction to mount node")
+}
+Rel(provider, tag, "creates theme rule")
+Rel(provider, context, "exposes inherited settings")
+Rel(portal, context, "consumes theme and document")
+@enduml

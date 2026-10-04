@@ -1,0 +1,29 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Verify React compatibility
+class "rit.config.js" as matrix <<module>> {
+ +react: Record<major, runConfig>
+}
+class "react-integration-tester" as runner <<module>> {
+ +config: Config
+}
+class "tsconfig.r17/r18/r19" as types <<module>> {
+ +extends: string
+ +compilerOptions: object
+}
+class "react-components/package.json" as metadata <<module>> {
+ +reactPeerRange: string
+}
+runner ..> matrix : reads matrix
+runner ..> types : runs version cases
+matrix ..> metadata : compares declared/tested ranges
+@enduml

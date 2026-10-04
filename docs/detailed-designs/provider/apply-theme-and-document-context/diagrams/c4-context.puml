@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Apply theme and document context
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "FluentProvider scopes theme tokens, text direction, and the target document for React controls")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

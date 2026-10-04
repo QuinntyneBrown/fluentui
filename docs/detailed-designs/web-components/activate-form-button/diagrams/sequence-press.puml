@@ -1,0 +1,41 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Dispatch default, reset, or submit action
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Button" as button
+participant "BaseButton" as base
+participant "ElementInternals" as internals
+participant "HTMLFormElement" as form
+end box
+actor -> base : Click or Enter/Space [L2-019]
+alt Focusable-disabled
+base --> actor : Stop activation
+else Active
+base -> base : press()
+alt type reset
+base -> internals : Read associated form
+internals --> base : Form or null
+base -> form : reset() when associated
+form --> actor : Reset native values
+else type submit
+base -> base : submitForm()
+else Default/button type
+base --> actor : No form action
+end
+end
+@enduml

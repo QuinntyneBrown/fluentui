@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Activate Button
+class "Button" as entry <<module>> {
+ +forwardRef(props: ButtonProps, ref): JSXElement
+}
+class "useButton_unstable" as state <<module>> {
+ +props: ButtonProps
+ +result: ButtonState
+}
+class "useARIAButtonProps" as aria <<module>> {
+ +disabledFocusable: boolean
+ +onClick(event: MouseEvent): void
+}
+class "renderButton_unstable" as view <<module>> {
+ +state: ButtonBaseState
+ +render(state): JSXElement
+}
+entry ..> state : builds state
+state ..> aria : normalizes root props
+entry ..> view : renders normalized state
+@enduml

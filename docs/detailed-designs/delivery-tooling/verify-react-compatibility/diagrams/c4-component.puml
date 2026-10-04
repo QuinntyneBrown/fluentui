@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Verify React compatibility
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(matrix, "rit.config.js", "Configuration module", "Defines per-major type-check cases")
+Component(runner, "react-integration-tester", "CLI package", "Runs configured integration cases")
+Component(types, "tsconfig.r17/r18/r19", "TypeScript configurations", "Select React-major declarations")
+Component(metadata, "react-components/package.json", "Package manifest", "Declares peer compatibility")
+}
+Rel(runner, matrix, "reads matrix")
+Rel(runner, types, "runs version cases")
+Rel(matrix, metadata, "compares declared/tested ranges")
+@enduml

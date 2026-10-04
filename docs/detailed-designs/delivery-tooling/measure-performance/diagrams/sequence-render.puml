@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Run rendering scenario
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "buildBundleSizeTarget" as plugin
+participant "monosize measure" as size
+participant "render" as render
+participant "Scenario" as scenario
+end box
+actor -> render : Load scenario, iterations, renderType [L2-029]
+render -> scenario : Instantiate selected React scenario
+loop Configured iterations
+scenario --> render : React element
+render -> render : flushSync and optional unmount
+end
+render --> actor : render-done marker
+note over render : Measurement collection and revision metadata are runner responsibilities
+@enduml

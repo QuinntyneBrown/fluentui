@@ -1,0 +1,36 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Execute configured checks and preserve outcomes
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "Nx task runner" as nx
+participant "workspace-plugin" as plugin
+participant "isConformant" as conformance
+participant "Acceptance coverage record" as coverage
+end box
+actor -> nx : Run project or affected targets [L2-034]
+nx -> plugin : Resolve applicable configuration
+plugin --> nx : Targets and prerequisites
+nx -> conformance : Run configured test suite
+alt Task runs successfully
+conformance --> nx : Actual check results
+nx --> actor : Passed/failed task result
+else Missing toolchain or skipped target
+nx --> actor : Not-run reason
+end
+actor -> coverage : Record actual outcomes
+@enduml

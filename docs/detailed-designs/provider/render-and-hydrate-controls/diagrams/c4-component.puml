@@ -1,0 +1,21 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Render and hydrate controls
+Container_Boundary(serverprocess, "Consumer server renderer") {
+Component(server, "renderToStaticMarkup", "React DOM server", "Produces initial markup")
+Component(serverprovider, "FluentProvider (server)", "Shared React component", "Carries server theme style props")
+Component(servertag, "useFluentProviderThemeStyleTag (server)", "Shared theme hook", "Calculates rule without DOM insertion")
+}
+Container_Boundary(browserprocess, "Consumer browser application") {
+Component(provider, "FluentProvider", "Provider component", "Carries server style props and descendant context")
+Component(tag, "useFluentProviderThemeStyleTag", "Theme lifecycle hook", "Reuses server style elements in browser")
+Component(hydrate, "hydrateRoot", "React DOM client function", "Attaches client tree to existing markup")
+}
+Rel(server, serverprovider, "Renders")
+Rel(serverprovider, servertag, "Calculates server rule")
+Rel(server, hydrate, "Supplies markup")
+Rel(hydrate, provider, "Attaches client tree")
+Rel(provider, tag, "Coordinates client styles")
+@enduml

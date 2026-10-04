@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Apply sanitized theme tokens
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "button/define.ts" as define
+participant "Button" as button
+participant "setTheme" as theme
+participant "button.definition-async" as assets
+end box
+actor -> theme : setTheme(theme, node) [L2-020]
+theme -> theme : Check themeable node and capabilities
+alt Stylesheet path
+theme -> theme : Sanitize names/values and build custom properties
+else Fallback path
+theme -> theme : Set valid properties on target element
+end
+theme --> button : CSS custom properties available
+button --> actor : Themed custom element
+@enduml

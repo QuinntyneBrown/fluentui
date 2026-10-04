@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Configure library consumers
+class "Consumer application" as host <<module>> {
+ +theme: Theme
+ +controlProps: object
+}
+class "FluentProvider" as provider <<module>> {
+ +theme: Theme
+ +children: ReactNode
+}
+class "button/define.ts" as registration <<module>> {
+ +definition: object
+}
+class "setTheme" as theme <<module>> {
+ +theme: Theme | null
+ +node: Document | HTMLElement
+}
+host ..> provider : renders React controls
+host ..> registration : imports side-effect entry
+host ..> theme : configures custom element theme
+@enduml

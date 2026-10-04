@@ -1,0 +1,38 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Validate and analyze selected fixtures
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "cli" as cli
+participant "loadConfig / selectFixtures" as config
+participant "BundleIsolationPlugin" as analysis
+participant "createReport / classify" as report
+end box
+actor -> cli : Verify configured package [L2-030, L2-031]
+cli -> config : loadConfig and selectFixtures [L2-040]
+alt Invalid config
+config --> cli : Schema error
+cli --> actor : Failure without PASS
+else Valid config
+config --> cli : Verified/skipped/orphaned selection
+cli -> analysis : Bundle built fixture with plugin
+analysis --> cli : Retained leaks and source resolution errors
+cli -> report : createReport(results, selection, options)
+report --> cli : Classified outcomes
+cli --> actor : Console verdict and summary.json [L2-038]
+end
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Configure React consumer
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Consumer application" as host
+participant "FluentProvider" as provider
+participant "button/define.ts" as registration
+participant "setTheme" as theme
+end box
+actor -> host : Follow React quick start [L2-037]
+host -> provider : Supply documented theme and child Button
+provider --> host : Context-backed controls
+host --> actor : Rendered control with consumer content/name
+@enduml

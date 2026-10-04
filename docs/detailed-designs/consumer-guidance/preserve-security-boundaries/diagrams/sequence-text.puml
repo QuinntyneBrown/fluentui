@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Preserve local text and host ownership
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "renderButton_unstable" as button
+participant "useInputBase_unstable" as input
+participant "Consumer authorization boundary" as host
+end box
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "loadConfig" as config
+end box
+box "Frontend - Repository policy documentation" #E0F2FE
+participant "SECURITY.md" as policy
+end box
+actor -> host : Supply text and authorization decision [L2-040, L2-041]
+alt Host permits subtree
+host -> button : Render string children through JSX
+button --> actor : Literal text without created img markup
+host -> input : Supply string as native input value
+input --> actor : Literal input value
+else Host omits confidential subtree
+host --> actor : Subtree absent
+end
+note over host : Network/storage instrumentation remains acceptance coverage to add
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Validate requirement coverage
+Person(actor, "Maintainer", "Uses or reviews the feature")
+System(host, "Fluent UI delivery workflow", "Validation connects project checks to requirements without confusing configured coverage with successful execution")
+System_Ext(platform, "Local execution tools", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

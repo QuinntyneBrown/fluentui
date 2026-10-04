@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Customize controls
+class "Button / Input" as entry <<module>> {
+ +props: ComponentProps
+ +ref: React.Ref<Element>
+}
+class "slot.always / slot.optional" as slots <<module>> {
+ +elementType: string
+ +defaultProps: object
+}
+class "useButtonStyles_unstable" as styles <<module>> {
+ +state: ButtonState
+ +className: string
+}
+class "assertSlots / renderButton_unstable" as render <<module>> {
+ +state: ButtonBaseState
+ +result: JSXElement
+}
+entry ..> slots : resolves slots
+entry ..> styles : applies styles
+entry ..> render : renders styled state
+@enduml
