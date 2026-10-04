@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Register and theme elements
+class "button/define.ts" as define <<module>> {
+ +definition: FASTElementDefinition
+}
+class "Button" as button <<class>> {
+ +appearance: ButtonAppearance
+ +shape: ButtonShape
+ +iconOnly: boolean
+}
+class "setTheme" as theme <<module>> {
+ +theme: Theme | null
+ +node: Document | HTMLElement
+}
+class "button.definition-async" as assets <<module>> {
+ +declarativeDefinition: object
+}
+define ..> button : registers element
+define ..> assets : alternate async definition
+theme ..> button : styles through CSS properties
+@enduml

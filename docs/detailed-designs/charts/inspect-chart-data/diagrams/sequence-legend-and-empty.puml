@@ -1,0 +1,36 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Select legends and render empty data
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "DonutChart" as chart
+participant "Pie" as pie
+participant "Legends" as legends
+participant "ChartPopover" as callout
+end box
+actor -> legends : Click legend [L2-022]
+legends -> chart : _onLegendSelectionChange(...)
+chart --> legends : Selected legend state
+legends --> actor : aria-selected toggled
+actor -> chart : Render data [L2-023]
+alt Empty chartData
+chart --> actor : Alert with no-data aria-label
+else Nonempty chartData
+chart -> pie : Render chart portions
+pie --> actor : Segments without empty-data label
+end
+@enduml

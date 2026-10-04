@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Inspect chart data
+class "DonutChart" as chart <<module>> {
+ +data: ChartProps
+ +selectedLegends: string[]
+ +activeLegend: string | undefined
+}
+class "Pie" as pie <<module>> {
+ +width: number
+ +height: number
+}
+class "Legends" as legends <<module>> {
+ +legends: Legend[]
+ +onChange(selectedLegends, event): void
+}
+class "ChartPopover" as callout <<module>> {
+ +anchor: Element | null
+ +visible: boolean
+}
+chart ..> pie : renders portions
+chart ..> legends : maps data to legends
+chart ..> callout : supplies inspected values
+@enduml

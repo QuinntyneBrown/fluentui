@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Activate Button
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(entry, "Button", "React component", "Composes state, style, custom style hook, and render")
+Component(state, "useButton_unstable", "State hook", "Applies visual defaults and normalizes slots")
+Component(aria, "useARIAButtonProps", "ARIA hook", "Normalizes native and anchor interaction")
+Component(view, "renderButton_unstable", "Render function", "Renders root and optional icon")
+}
+Rel(entry, state, "builds state")
+Rel(state, aria, "normalizes root props")
+Rel(entry, view, "renders normalized state")
+@enduml

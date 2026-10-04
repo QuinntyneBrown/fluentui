@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Apply theme and document context
+class "useFluentProvider_unstable" as provider <<module>> {
+ +theme: Theme | undefined
+ +dir: ltr | rtl
+ +targetDocument: Document | undefined
+}
+class "useFluentProviderThemeStyleTag" as tag <<module>> {
+ +styleTagId: string
+ +rule: string
+}
+class "useFluentProviderContextValues_unstable" as context <<module>> {
+ +state: FluentProviderState
+ +contextValues: object
+}
+class "usePortalMountNode" as portal <<module>> {
+ +mountNode: HTMLDivElement | null
+ +disabled: boolean
+}
+provider ..> tag : creates theme rule
+provider ..> context : exposes inherited settings
+portal ..> context : consumes theme and document
+@enduml

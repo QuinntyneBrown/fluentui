@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Publish consumable APIs
+class "Package manifest" as manifest <<module>> {
+ +exports: object
+ +files: string[]
+}
+class "generate-api executor" as api <<module>> {
+ +options: GenerateApiExecutorSchema
+ +result: success
+}
+class "verify-packaging executor" as verify <<module>> {
+ +options: VerifyPackagingExecutorSchema
+ +result: success
+}
+class "Isolated consumer fixture" as consumer <<proposed>> {
+ +moduleMode: ESM | CommonJS
+ +typescript: boolean
+}
+api ..> manifest : uses public entry configuration
+verify ..> manifest : checks shipped file patterns
+consumer ..> manifest : resolves export map
+@enduml

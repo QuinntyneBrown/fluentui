@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Resize chart
+class "ResponsiveContainer" as container <<module>> {
+ +aspect: number | undefined
+ +maxHeight: number | undefined
+ +size: object
+}
+class "ResizeObserver" as observer <<interface>> {
+ +observe(target: Element): void
+ +disconnect(): void
+}
+class "Window animation frame" as frame <<interface>> {
+ +requestAnimationFrame(callback): number
+ +cancelAnimationFrame(id): void
+}
+class "ResponsiveChildProps" as child <<interface>> {
+ +width: number | undefined
+ +height: number | undefined
+ +shouldResize: number | undefined
+}
+container ..> observer : owns observer lifecycle
+container ..> frame : schedules updates
+container ..> child : clones with dimensions
+@enduml

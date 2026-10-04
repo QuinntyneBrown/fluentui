@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Record package changes
+class "Beachball change record" as change <<module>> {
+ +packageName: string
+ +type: patch | minor
+ +comment: string
+}
+class "SharedConfig" as config <<module>> {
+ +branch: string
+ +changelog: object
+ +hooks: object
+}
+class "renderHeader" as header <<module>> {
+ +renderInfo: PackageChangelogRenderInfo
+ +result: Promise<string>
+}
+class "renderEntry" as entry <<module>> {
+ +entry: ChangelogEntry
+ +result: Promise<string>
+}
+config ..> header : configures renderer
+config ..> entry : configures entry renderer
+entry ..> change : renders release change intent
+@enduml

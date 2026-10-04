@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Open and position popup
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "useMenuBase_unstable" as menu
+participant "usePositioning" as position
+participant "useMenuPopover_unstable" as popover
+participant "Portal" as portal
+end box
+actor -> menu : Trigger open request [L2-043]
+menu -> position : Resolve target and fallback options
+position --> menu : Target/container refs and position
+menu -> popover : Publish open menu context
+popover -> portal : Mount supported popup content
+portal --> actor : Positioned menu
+note over position : Target containment acceptance remains unverified across all widths
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Preserve security boundaries
+class "renderButton_unstable" as button <<module>> {
+ +state: ButtonBaseState
+}
+class "useInputBase_unstable" as input <<module>> {
+ +value: string
+}
+class "loadConfig" as config <<module>> {
+ +configPath: string
+ +result: Config
+}
+class "Consumer authorization boundary" as host <<module>> {
+ +authorized: boolean
+ +children: ReactNode
+}
+class "SECURITY.md" as policy <<module>> {
+ +reportingRoute: MSRC
+ +publicIssuesForVulnerabilities: false
+}
+host ..> button : supplies text and action callbacks
+host ..> input : supplies controlled or local text
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Validate requirement coverage
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(nx, "Nx task runner", "Workspace tool", "Selects and executes project targets")
+Component(plugin, "workspace-plugin", "Nx plugin", "Infers applicable project tasks")
+Component(conformance, "isConformant", "Test function", "Registers API and rendering assertions")
+Component(coverage, "Acceptance coverage record", "Proposed document model", "Maps L2 IDs to test outcomes")
+}
+Rel(nx, plugin, "loads inferred targets")
+Rel(nx, conformance, "runs configured test suite")
+Rel(coverage, nx, "records actual outcomes")
+@enduml

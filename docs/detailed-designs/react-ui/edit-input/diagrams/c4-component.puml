@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Edit Input
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(entry, "Input", "React component", "Composes input state and rendering")
+Component(state, "useInputBase_unstable", "State hook", "Partitions native props and handles onChange")
+Component(value, "useControllableState", "Utility hook", "Chooses controlled or internal state")
+Component(view, "renderInput_unstable", "Render function", "Renders native input and content slots")
+}
+Rel(entry, state, "builds slots")
+Rel(state, value, "owns value protocol")
+Rel(entry, view, "renders slots")
+@enduml

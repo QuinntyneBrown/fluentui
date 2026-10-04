@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Verify React compatibility
+Person(actor, "Maintainer", "Uses or reviews the feature")
+System(host, "Fluent UI delivery workflow", "React compatibility separates the package's declared peer range from tested React versions")
+System_Ext(platform, "Local execution tools", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

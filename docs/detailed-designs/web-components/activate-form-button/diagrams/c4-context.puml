@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Activate form Button
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "The custom element Button participates in native form actions through BaseButton")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

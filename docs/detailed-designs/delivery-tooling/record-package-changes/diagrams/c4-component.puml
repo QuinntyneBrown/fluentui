@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Record package changes
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(change, "Beachball change record", "JSON artifact", "Identifies package, type, and description")
+Component(config, "SharedConfig", "Type/configuration", "Holds branch, registry, hooks, and changelog")
+Component(header, "renderHeader", "Renderer function", "Formats version and comparison header")
+Component(entry, "renderEntry", "Renderer function", "Formats change entry with source attribution")
+}
+Rel(config, header, "configures renderer")
+Rel(config, entry, "configures entry renderer")
+Rel(entry, change, "renders release change intent")
+@enduml

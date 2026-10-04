@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Containers - Validate requirement coverage
+Person(actor, "Maintainer", "Uses or reviews the feature")
+System_Boundary(system, "Fluent UI delivery workflow") {
+Container(process, "Local build and test process", "Node / Nx", "Executes configured workflow")
+ContainerDb(files, "Package and artifact files", "Filesystem, not a database service", "Configuration, output, and reports")
+}
+Rel(actor, process, "Runs and reviews")
+Rel(process, files, "Reads inputs and writes configured output")
+@enduml

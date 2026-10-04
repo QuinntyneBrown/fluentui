@@ -1,0 +1,36 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Request and commit changed text
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Input" as entry
+participant "useInputBase_unstable" as state
+participant "useControllableState" as value
+participant "renderInput_unstable" as view
+end box
+actor -> state : Native input change [L2-003]
+state -> state : Read event.target.value
+state --> actor : onChange(event, { value })
+state -> value : setValue(newValue) [L2-004]
+alt Controlled value supplied
+value --> state : Retain consumer value
+else Uncontrolled
+value --> state : Commit internal value
+end
+state -> view : Render current input value
+view --> actor : Updated or retained text
+@enduml

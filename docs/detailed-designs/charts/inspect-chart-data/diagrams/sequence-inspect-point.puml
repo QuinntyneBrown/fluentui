@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Inspect a point and leave it
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "DonutChart" as chart
+participant "Pie" as pie
+participant "Legends" as legends
+participant "ChartPopover" as callout
+end box
+actor -> pie : Hover or focus segment [L2-022, L2-023]
+pie -> chart : Point callback and target element
+chart -> callout : Set inspected point values
+callout --> actor : Visible point details/focus indication
+actor -> pie : Mouse leave or blur
+pie -> chart : Clear inspection state
+chart -> callout : Dismiss callout
+callout --> actor : Callout or focus indication removed
+@enduml

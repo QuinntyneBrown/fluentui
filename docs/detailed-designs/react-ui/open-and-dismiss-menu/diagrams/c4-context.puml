@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Open and dismiss Menu
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "Menu combines a trigger, popup, menu items, and shared state")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

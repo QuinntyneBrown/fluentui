@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Edit Input
+class "Input" as entry <<module>> {
+ +props: InputProps
+ +ref: Ref<HTMLInputElement>
+}
+class "useInputBase_unstable" as state <<module>> {
+ +value: string
+ +onChange(event): void
+}
+class "useControllableState" as value <<module>> {
+ +state: string | undefined
+ +defaultState: string | undefined
+ +setState(value: string): void
+}
+class "renderInput_unstable" as view <<module>> {
+ +state: InputBaseState
+ +render(state): JSXElement
+}
+entry ..> state : builds slots
+state ..> value : owns value protocol
+entry ..> view : renders slots
+@enduml

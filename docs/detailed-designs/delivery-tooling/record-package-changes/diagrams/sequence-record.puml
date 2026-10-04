@@ -1,0 +1,35 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Review release intent
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "Beachball change record" as change
+participant "SharedConfig" as config
+participant "renderHeader" as header
+participant "renderEntry" as entry
+end box
+actor -> change : Record package and consumer-visible change [L2-035]
+alt Bug fix
+actor -> change : Select patch
+else Additive feature
+actor -> change : Select minor
+else Breaking change
+actor -> config : Check approval and package disallowed types
+config --> actor : Required policy constraints
+end
+change --> actor : Change record for release validation
+@enduml

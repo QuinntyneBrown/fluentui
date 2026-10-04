@@ -1,0 +1,14 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Measure performance
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(plugin, "buildBundleSizeTarget", "Nx target builder", "Infers monosize measurement task")
+Component(size, "monosize measure", "Measurement CLI", "Measures configured bundle fixtures")
+Component(render, "render", "Flamegrill harness function", "Renders selected scenario repeatedly")
+Component(scenario, "Scenario", "Callable TypeScript interface", "Defines measured React content")
+}
+Rel(plugin, size, "builds target command")
+Rel(render, scenario, "executes selected scenario")
+@enduml

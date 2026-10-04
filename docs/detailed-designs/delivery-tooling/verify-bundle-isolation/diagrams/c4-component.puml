@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Verify bundle isolation
+Container_Boundary(feature_scope, "Local tooling workflow") {
+Component(cli, "cli", "Tool entry function", "Loads config, bundles selected fixtures, writes summary")
+Component(config, "loadConfig / selectFixtures", "Config functions", "Validate schema and classify fixture selection")
+Component(analysis, "BundleIsolationPlugin", "Webpack plugin", "Inspects retained modules and used exports")
+Component(report, "createReport / classify", "Pure report functions", "Computes findings and overall failure")
+}
+Rel(cli, config, "loads and selects")
+Rel(cli, analysis, "bundles with plugin")
+Rel(cli, report, "classifies analysis")
+@enduml

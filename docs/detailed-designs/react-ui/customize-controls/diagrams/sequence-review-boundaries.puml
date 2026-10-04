@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Review architecture boundaries
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Button / Input" as entry
+participant "slot.always / slot.optional" as slots
+participant "useButtonStyles_unstable" as styles
+participant "assertSlots / renderButton_unstable" as render
+end box
+actor -> entry : Inspect new component [L2-032]
+note over entry : Entry orchestrates hook, styles, and render
+actor -> slots : Inspect shared utility dependencies [L2-033]
+alt Sibling component dependency introduced
+slots --> actor : Record layer violation
+else Allowed foundation dependency
+slots --> actor : Record compliant dependency direction
+end
+@enduml

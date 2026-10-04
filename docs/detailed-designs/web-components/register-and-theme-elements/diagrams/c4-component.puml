@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Register and theme elements
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(define, "button/define.ts", "Side-effect module", "Calls Button.define with definition")
+Component(button, "Button", "Custom element class", "Adds appearance and layout attributes")
+Component(theme, "setTheme", "Browser theme function", "Sets sanitized custom properties")
+Component(assets, "button.definition-async", "Declarative definition", "Connects documented template and styles")
+}
+Rel(define, button, "registers element")
+Rel(define, assets, "alternate async definition")
+Rel(theme, button, "styles through CSS properties")
+@enduml

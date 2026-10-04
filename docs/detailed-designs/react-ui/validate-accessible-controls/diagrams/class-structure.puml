@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Validate accessible controls
+class "ButtonAccessibility contract" as spec <<module>> {
+ +roles: string[]
+ +keyboardCommands: string[]
+}
+class "ComponentTestFacade" as facade <<module>> {
+ +component: ComponentType
+ +props: object
+}
+class "validateBehavior" as checks <<module>> {
+ +definition: BehaviorDefinition
+ +result: errors[]
+}
+class "Button" as button <<module>> {
+ +disabled: boolean
+ +disabledFocusable: boolean
+}
+checks ..> facade : checks adapter behavior
+facade ..> button : renders control
+spec ..> checks : defines expected semantics
+@enduml

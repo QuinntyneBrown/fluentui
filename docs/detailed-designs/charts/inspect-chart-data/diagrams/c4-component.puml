@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Inspect chart data
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(chart, "DonutChart", "React chart", "Owns highlighted legends and point state")
+Component(pie, "Pie", "SVG child", "Renders segments with focus and hover callbacks")
+Component(legends, "Legends", "Chart component", "Handles selection and series labels")
+Component(callout, "ChartPopover", "Chart component", "Displays inspected point data")
+}
+Rel(chart, pie, "renders portions")
+Rel(chart, legends, "maps data to legends")
+Rel(chart, callout, "supplies inspected values")
+@enduml

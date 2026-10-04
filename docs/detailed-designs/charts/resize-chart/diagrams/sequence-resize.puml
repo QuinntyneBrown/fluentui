@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Propagate measured dimensions
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "ResponsiveContainer" as container
+participant "ResizeObserver" as observer
+participant "Window animation frame" as frame
+participant "ResponsiveChildProps" as child
+end box
+actor -> observer : Resize observed host [L2-044]
+observer -> container : contentRect(width, height)
+container --> actor : onResize(original width, height)
+container -> frame : requestAnimationFrame(update)
+frame --> container : Execute callback
+container -> container : Floor dimensions; retain state if unchanged
+container -> child : Clone with aspect-adjusted width and capped height
+child --> actor : Resized chart
+@enduml

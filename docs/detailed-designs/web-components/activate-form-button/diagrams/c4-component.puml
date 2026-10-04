@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Activate form Button
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(button, "Button", "Custom element", "Extends form-aware base behavior")
+Component(base, "BaseButton", "FASTElement subclass", "Dispatches press to reset or submit")
+Component(internals, "ElementInternals", "Browser API", "Associates element with form")
+Component(form, "HTMLFormElement", "Browser API", "Performs validation, reset, and submission")
+}
+Rel(button, base, "inherits")
+Rel(base, internals, "uses attached internals")
+Rel(internals, form, "references associated form")
+@enduml

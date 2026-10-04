@@ -1,0 +1,30 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Measure a configured bundle
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "buildBundleSizeTarget" as plugin
+participant "monosize measure" as size
+participant "render" as render
+participant "Scenario" as scenario
+end box
+actor -> plugin : Select bundle-size target [L2-029]
+plugin -> size : monosize measure in project directory
+size -> size : Bundle configured public fixture
+size --> actor : Fixture measurement with byte unit
+note over size : Numeric acceptance budget remains TO SUPPLY
+@enduml

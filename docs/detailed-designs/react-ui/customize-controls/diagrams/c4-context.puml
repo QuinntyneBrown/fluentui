@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title System context - Customize controls
+Person(actor, "Application user", "Uses or reviews the feature")
+System(host, "Fluent UI consuming application", "Control customization changes slot content and styling without replacing the state contract")
+System_Ext(platform, "Browser platform", "Platform APIs and execution capabilities")
+Rel(actor, host, "Uses")
+Rel(host, platform, "Uses platform capabilities")
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Validate accessible controls
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(spec, "ButtonAccessibility contract", "Documentation", "Records roles and naming responsibilities")
+Component(facade, "ComponentTestFacade", "Test adapter", "Exposes component behavior to checks")
+Component(checks, "validateBehavior", "Accessibility validator", "Evaluates behavior definition against adapter")
+Component(button, "Button", "React control", "Provides native semantics and focusable states")
+}
+Rel(checks, facade, "checks adapter behavior")
+Rel(facade, button, "renders control")
+Rel(spec, checks, "defines expected semantics")
+@enduml

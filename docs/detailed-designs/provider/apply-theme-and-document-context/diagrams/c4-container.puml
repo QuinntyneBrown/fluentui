@@ -1,0 +1,11 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Containers - Apply theme and document context
+Person(actor, "Application user", "Uses or reviews the feature")
+System_Boundary(system, "Fluent UI consuming application") {
+Container(browser, "Consumer browser application", "JavaScript / DOM", "Hosts Fluent UI libraries in the same process")
+}
+Rel(actor, browser, "Uses")
+@enduml

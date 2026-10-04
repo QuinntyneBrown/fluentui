@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Audit requirement trace and ATDD evidence
+actor "Maintainer" as actor
+box "Backend - Local tooling process (not a service)" #FFF4E5
+participant "Nx task runner" as nx
+participant "workspace-plugin" as plugin
+participant "isConformant" as conformance
+participant "Acceptance coverage record" as coverage
+end box
+actor -> coverage : Inspect acceptance test header [L2-036]
+coverage -> coverage : Resolve each L2 ID to one L1
+alt Missing or unknown ID
+coverage --> actor : Traceability gap
+else Valid trace
+coverage --> actor : Requirement-to-test mapping
+end
+actor -> coverage : Record failing-before / passing-after evidence
+note over coverage : Historical tests do not prove original ATDD
+@enduml

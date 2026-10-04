@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Initialize and rerender value
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Input" as entry
+participant "useInputBase_unstable" as state
+participant "useControllableState" as value
+participant "renderInput_unstable" as view
+end box
+actor -> entry : Supply value and defaultValue [L2-004]
+entry -> state : Normalize props
+state -> value : Select state / defaultState / empty initial state
+value --> state : Initial value
+state --> entry : InputState
+entry -> view : Render native input
+view --> actor : Selected value
+actor -> entry : Rerender with changed props
+note over value : Controlled value updates; defaultValue alone does not reinitialize
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Configure library consumers
+Container_Boundary(feature_scope, "Consumer browser application") {
+Component(host, "Consumer application", "Integration boundary", "Imports documented public APIs")
+Component(provider, "FluentProvider", "React provider", "Supplies theme to child Button")
+Component(registration, "button/define.ts", "Registration module", "Defines custom button element")
+Component(theme, "setTheme", "Browser theme function", "Applies Web Component CSS token theme")
+}
+Rel(host, provider, "renders React controls")
+Rel(host, registration, "imports side-effect entry")
+Rel(host, theme, "configures custom element theme")
+@enduml

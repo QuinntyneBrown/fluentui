@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+ BorderColor #344054
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+title Type structure - Open and dismiss Menu
+class "useMenuBase_unstable" as menu <<module>> {
+ +open: boolean
+ +setOpen(event, data): void
+}
+class "usePositioning" as position <<module>> {
+ +targetRef: Ref<Element>
+ +containerRef: Ref<Element>
+}
+class "useMenuPopover_unstable" as popover <<module>> {
+ +root: Slot<div>
+ +triggerRef: Ref<Element>
+}
+class "Portal" as portal <<module>> {
+ +mountNode: HTMLElement | null
+ +children: ReactNode
+}
+menu ..> position : sets position options
+popover ..> menu : requests open state changes
+popover ..> portal : uses portal rendering
+@enduml

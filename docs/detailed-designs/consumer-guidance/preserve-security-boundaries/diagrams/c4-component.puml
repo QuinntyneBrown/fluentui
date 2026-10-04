@@ -1,0 +1,19 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+title Components - Preserve security boundaries
+Container_Boundary(browserprocess, "Consumer browser application") {
+Component(button, "renderButton_unstable", "React render function", "Renders consumer text through JSX")
+Component(input, "useInputBase_unstable", "Input state hook", "Passes text value to native input")
+Component(host, "Consumer authorization boundary", "External application responsibility", "Controls confidential subtree and data operations")
+}
+Container_Boundary(toolprocess, "Local tooling process") {
+Component(config, "loadConfig", "Tool configuration function", "Validates library-owned isolation input")
+}
+Container_Boundary(policystore, "Repository policy files") {
+Component(policy, "SECURITY.md", "Repository policy artifact", "Identifies private reporting route")
+}
+Rel(host, button, "supplies text and action callbacks")
+Rel(host, input, "supplies controlled or local text")
+@enduml

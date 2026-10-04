@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Render native or anchor root
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Button" as entry
+participant "useButton_unstable" as state
+participant "useARIAButtonProps" as aria
+participant "renderButton_unstable" as view
+end box
+actor -> entry : Render props and ref [L2-001, L2-002]
+entry -> state : useButton_unstable(props, ref)
+state -> aria : Normalize root element and disabled state
+aria --> state : ARIA root props
+state --> entry : ButtonState
+entry -> view : Render root and icon
+view --> entry : JSXElement
+entry --> actor : Native button or anchor
+@enduml

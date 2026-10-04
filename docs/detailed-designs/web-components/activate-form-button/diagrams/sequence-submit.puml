@@ -1,0 +1,43 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+ BorderColor #344054
+ FontColor #101828
+}
+skinparam package {
+ BorderColor #667085
+ FontColor #101828
+ BackgroundColor #F9FAFB
+}
+skinparam maxMessageSize 80
+title Behavior - Submit through native form semantics
+actor "Application user" as actor
+box "Frontend - Consumer browser application" #E0F2FE
+participant "Button" as button
+participant "BaseButton" as base
+participant "ElementInternals" as internals
+participant "HTMLFormElement" as form
+end box
+actor -> base : Request submit [L2-019]
+base -> internals : Read form and set submitter value
+internals --> base : Associated form
+alt No overrides
+base -> form : requestSubmit()
+else Submitter overrides present
+base -> form : requestSubmit(custom element)
+alt Custom submitter rejected
+base -> base : Create native fallback and copy attributes
+base -> internals : setFormValue(null)
+base -> form : requestSubmit(native fallback)
+end
+end
+alt Invalid form without formnovalidate
+form --> actor : Submission blocked
+else Valid or explicitly bypassed validation
+form --> actor : Browser submits configured form
+end
+@enduml
